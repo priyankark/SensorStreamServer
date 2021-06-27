@@ -3,6 +3,7 @@ These are simple servers with WebSocket support that accept the sensor data and 
 
 # Steps:
 * Clone the repository or download the zip file and unzip it to a directory of your choice.
+* Make sure you have given the app all the necessary access permissions (especially if you wish to use audio streaming/image streaming)
 
 ## To Run the Python Server (version >= Python 3.0)
 
