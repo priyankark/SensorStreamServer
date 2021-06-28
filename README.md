@@ -54,6 +54,7 @@ You can make any changes you want to to server.py
 * Light Sensor: light
 * Proximity: isNear, value, maxRange
 * Link: https://github.com/kprimice/react-native-sensor-manager
+* Camera and Audio: base64 encoded strings
 
 ## Contribution guidelines
 This repository is open to contributions. 
