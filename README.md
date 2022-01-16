@@ -53,9 +53,14 @@ You can make any changes you want to to server.py
 * Link: https://github.com/kprimice/react-native-sensor-manager
 * Camera and Audio: base64 encoded strings
 
-## Contribution guidelines
+## Contribution guidelines (Optional)
 This repository is open to contributions. 
 On the server side, we are looking to support sample servers in more languages and frameworks such as node.js, Go etc.
 Please feel free to raise PRs!
 
-### For more support, please e-mail priyankar.kumar98@gmail.com
+### For more support, please e-mail priyankar.kumar98@gmail.com and I will get back to you ASAP.
+
+## Donations (Optional)
+If this project helped you in any way, consider donating a token amount to a charity of your choice.
+Alternatively, you may send in donations to priyankark.wallet (ETH/MATIC accepted).
+The funds will be utilized for maintaining the project and any excesses will be donated back to charities.
