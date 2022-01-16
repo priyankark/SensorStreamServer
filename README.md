@@ -62,5 +62,5 @@ Please feel free to raise PRs!
 
 ## Donations (Optional)
 If this project helped you in any way, consider donating a token amount to a charity of your choice.
-Alternatively, you may send in donations to priyankark.wallet (ETH/MATIC accepted).
+Alternatively, you may send in donations to **priyankark.wallet** (ETH/MATIC accepted).
 The funds will be utilized for maintaining the project and any excesses will be donated back to charities.
