@@ -1,3 +1,7 @@
+# Sensor Stream App
+
+Sensor Stream allows you to convert your phone into a complete sensor hub and stream real-time sensor information from your phone to the provided open source server over wifi/local network. The server can be modified as per your use-case. The app can be used to build IoT applications, for data science projects and many more use cases!
+
 # Sensor Stream Server
 These are simple servers with WebSocket support that accept the sensor data and write it to a text file. These are companion sample servers for the Sensor Stream app.
 
@@ -47,10 +51,11 @@ You can make any changes you want to to server.py
 * Light Sensor: light
 * Proximity: isNear, value, maxRange
 * Link: https://github.com/kprimice/react-native-sensor-manager
+* Camera and Audio: base64 encoded strings
 
-## Contribution guidelines
+## Contribution guidelines (Optional)
 This repository is open to contributions. 
 On the server side, we are looking to support sample servers in more languages and frameworks such as node.js, Go etc.
 Please feel free to raise PRs!
 
-### For more support, please e-mail priyankar.kumar98@gmail.com
+### For more support, please e-mail priyankar.kumar98@gmail.com and I will get back to you ASAP.
