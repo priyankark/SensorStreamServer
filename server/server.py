@@ -118,7 +118,10 @@ async def echo(websocket, path):
                 wav.writeframesraw(pcmdata)
             print("Wrote to audio.wav")
 
+# Contribution by Evan Johnston
+async def main():
+    async with websockets.serve(echo, '0.0.0.0', 5000, max_size=1_000_000_000):
+        await asyncio.Future()
+    
 
-asyncio.get_event_loop().run_until_complete(
-    websockets.serve(echo, '0.0.0.0', 5000, max_size=1_000_000_000))
-asyncio.get_event_loop().run_forever()
+asyncio.run(main())
