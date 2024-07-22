@@ -101,6 +101,25 @@ async def echo(websocket, path):
                 await websocket.close()
 
         if path == '/audio':
+            print("Device connected to audio endpoint")
+            data = await websocket.recv()
+            print(data)
+            decoded_data = b64decode(data, ' /')
+            with open('temp.pcm', 'ab') as pcm:
+                pcm.write(decoded_data)
+            with open('temp.pcm', 'rb') as pcm:
+                pcmdata = pcm.read()
+            with wave.open('audio.wav', 'wb') as wav:
+                #(nchannels, sampwidth, framerate, nframes, comptype, compname)
+                #wav.setparams((1, 16, 32000, 32, 'NONE', 'NONE'))
+                wav.setnchannels(1)
+                wav.setsampwidth(2)
+                wav.setframerate(48000)
+                wav.setcomptype('NONE', 'NONE')
+                wav.writeframesraw(pcmdata)
+            print("Wrote to audio.wav")
+        
+        if path == '/pro/audio':
             print("Device connected to unchunked audio endpoint")
             try:
                 print("Audio Received")
@@ -110,42 +129,9 @@ async def echo(websocket, path):
                 decoded_data = b64decode(message)
                 with open('temp.3gp', 'ab') as gp3:
                     gp3.write(decoded_data)
-                with open('temp.3gp', 'rb') as gp3:
-                    gp3_data = gp3.read()
-                with wave.open('audio.wav', 'wb') as wav:
-                    wav.setnchannels(2)
-                    wav.setsampwidth(2)
-                    wav.setframerate(44100)
-                    wav.setcomptype('NONE', 'NONE')
-                    wav.writeframesraw(gp3_data)
-                    print("Wrote to audio.wav")
-                websocket.send("Audio received and processed successfully")
             except e:
                 print(f"Error processing audio: {e}")
         
-        if path == "/chunkedaudio":
-            print("Device connected to audio endpoint")
-            try:
-                print(websocket)
-                print(message)
-                data = await websocket.recv()
-                print("Audio Chunked Received")
-                # Decode the complete base64 string
-                decoded_data = b64decode(data)
-                print("Audio Decoded")
-                # Process the decoded data (e.g., save to file)
-                with wave.open('audio.wav', 'wb') as wav:
-                    wav.setnchannels(2)
-                    wav.setsampwidth(2)
-                    wav.setframerate(44100)
-                    wav.writeframesraw(decoded_data)
-                await websocket.send("Audio received and processed successfully")
-            except websockets.exceptions.ConnectionClosed:
-                print("WebSocket connection closed unexpectedly")
-            except Exception as e:
-                print(f"Error processing audio: {e}")
-           
-
 
 # Contribution by Evan Johnston
 async def main():
