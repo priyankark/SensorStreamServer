@@ -7,6 +7,7 @@ from base64 import b64decode
 import wave
 import json
 
+buffer = ""  # Buffer to store the base64 string chunks
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -117,6 +118,20 @@ async def echo(websocket, path):
                 wav.setcomptype('NONE', 'NONE')
                 wav.writeframesraw(pcmdata)
             print("Wrote to audio.wav")
+        
+        if path == '/pro/audio':
+            print("Device connected to unchunked audio endpoint")
+            try:
+                print("Audio Received")
+                print(websocket)
+                print(message)
+                print(len(message))
+                decoded_data = b64decode(message)
+                with open('temp.3gp', 'ab') as gp3:
+                    gp3.write(decoded_data)
+            except e:
+                print(f"Error processing audio: {e}")
+        
 
 # Contribution by Evan Johnston
 async def main():
