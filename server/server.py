@@ -7,12 +7,10 @@ from base64 import b64decode
 import wave
 import json
 
-buffer = ""  # Buffer to store the base64 string chunks
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        # doesn't even have to be reachable
         s.connect(('10.255.255.255', 1))
         IP = s.getsockname()[0]
     except Exception:
@@ -110,8 +108,6 @@ async def echo(websocket, path):
             with open('temp.pcm', 'rb') as pcm:
                 pcmdata = pcm.read()
             with wave.open('audio.wav', 'wb') as wav:
-                #(nchannels, sampwidth, framerate, nframes, comptype, compname)
-                #wav.setparams((1, 16, 32000, 32, 'NONE', 'NONE'))
                 wav.setnchannels(1)
                 wav.setsampwidth(2)
                 wav.setframerate(48000)
