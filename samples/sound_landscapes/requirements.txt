@@ -1,0 +1,12 @@
+asyncio==3.4.3
+Wave==0.0.2
+websockets==10.4
+numpy
+pandas
+matplotlib
+Pillow
+seaborn
+scipy
+librosa
+pydub
+pygame
