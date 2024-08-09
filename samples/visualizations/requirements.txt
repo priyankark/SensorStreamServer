@@ -8,3 +8,4 @@ Pillow
 seaborn
 scipy
 librosa
+pydub

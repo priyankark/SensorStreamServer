@@ -15,6 +15,7 @@ import seaborn as sns
 from scipy.io import wavfile
 import librosa
 import librosa.display
+from pydub import AudioSegment
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -29,7 +30,7 @@ def get_ip():
 
 hostname = socket.gethostname()
 IPAddr = get_ip()
-port = 5000
+port = 8989
 print(f"Your Computer Name is: {hostname}")
 print(f"Your Computer IP Address is: {IPAddr}")
 print(f"* Enter {IPAddr}:{port} in the app.\n* Press the 'Set IP Address' button.\n* Select the sensors to stream.\n* Update the 'update interval' by entering a value in ms.")
@@ -118,6 +119,40 @@ async def process_audio(audio_data):
     plt.close()
     print("Generated audio spectrogram")
 
+async def process_3gp_audio(file_path):
+    print(f"Processing 3GP audio file: {file_path}")
+    
+    # Convert 3GP to WAV
+    audio = AudioSegment.from_file(file_path, format="3gp")
+    wav_path = file_path.replace('.3gp', '.wav')
+    audio.export(wav_path, format="wav")
+    print(f"Converted 3GP to WAV: {wav_path}")
+    
+    # Generate spectrogram
+    y, sr = librosa.load(wav_path)
+    D = librosa.stft(y)
+    S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)
+    
+    plt.figure(figsize=(12, 8))
+    librosa.display.specshow(S_db, sr=sr, x_axis='time', y_axis='hz')
+    plt.colorbar(format='%+2.0f dB')
+    plt.title('3GP Audio Spectrogram')
+    plt.tight_layout()
+    spectrogram_path = file_path.replace('.3gp', '_spectrogram.png')
+    plt.savefig(spectrogram_path)
+    plt.close()
+    print(f"Generated spectrogram: {spectrogram_path}")
+    
+    # Generate waveform
+    plt.figure(figsize=(12, 4))
+    librosa.display.waveshow(y, sr=sr)
+    plt.title('3GP Audio Waveform')
+    plt.tight_layout()
+    waveform_path = file_path.replace('.3gp', '_waveform.png')
+    plt.savefig(waveform_path)
+    plt.close()
+    print(f"Generated waveform: {waveform_path}")
+
 async def echo(websocket, path):
     if path in ['/accelerometer', '/gyroscope', '/magnetometer', '/orientation', '/stepcounter', '/thermometer', '/lightsensor', '/proximity', '/geolocation']:
         await process_sensor_data(websocket, path[1:])
@@ -132,9 +167,11 @@ async def echo(websocket, path):
         try:
             data = await websocket.recv()
             decoded_data = b64decode(data)
-            with open('audio.3gp', 'wb') as gp3:
+            file_path = 'audio.3gp'
+            with open(file_path, 'wb') as gp3:
                 gp3.write(decoded_data)
             print("Saved 3GP audio file")
+            await process_3gp_audio(file_path)
         except Exception as e:
             print(f"Error processing audio: {e}")
 
