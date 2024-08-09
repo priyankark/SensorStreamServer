@@ -22,10 +22,12 @@ def get_ip():
 
 hostname = socket.gethostname()
 IPAddr = get_ip()
+# Using 5000 as the default port but you can change based on your requirements
+port = 5000
 print("Your Computer Name is: " + hostname)
 print("Your Computer IP Address is: " + IPAddr)
 print(
-    "* Enter {0}:5000 in the app.\n* Press the 'Set IP Address' button.\n* Select the sensors to stream.\n* Update the 'update interval' by entering a value in ms.".format(IPAddr))
+    "* Enter {0}:{1} in the app.\n* Press the 'Set IP Address' button.\n* Select the sensors to stream.\n* Update the 'update interval' by entering a value in ms.".format(IPAddr, port))
 
 
 async def echo(websocket, path):
@@ -67,7 +69,6 @@ async def echo(websocket, path):
             f.write(data+"\n")
 
         if path == '/lightsensor':
-            print("connected")
             data = await websocket.recv()
             print(data)
             f = open("lightsensor.txt", "a")
@@ -131,7 +132,7 @@ async def echo(websocket, path):
 
 # Contribution by Evan Johnston
 async def main():
-    async with websockets.serve(echo, '0.0.0.0', 5000, max_size=1_000_000_000):
+    async with websockets.serve(echo, '0.0.0.0', port, max_size=1_000_000_000):
         await asyncio.Future()
     
 
