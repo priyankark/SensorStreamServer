@@ -96,7 +96,12 @@ async def handle_pro_audio(message):
         print(f"[pro/audio] Error: {e}")
 
 
-async def websocket_handler(websocket, path):
+async def websocket_handler(websocket, path=None):
+    # websockets >= 14 calls the handler with only `websocket` and exposes the
+    # path via websocket.request.path. Older versions pass `path` directly.
+    if path is None:
+        path = websocket.request.path
+
     print(f"Client connected to {path}")
 
     async for message in websocket:
